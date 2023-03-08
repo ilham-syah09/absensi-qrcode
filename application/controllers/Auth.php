@@ -12,10 +12,10 @@ class Auth extends CI_Controller
                 $this->session->set_flashdata('notif-error', 'Anda sudah login !');
                 redirect('admin');
             }
-        } else if (!empty($this->session->userdata('log_user'))) {
+        } else if (!empty($this->session->userdata('log_pegawai'))) {
             if ($this->uri->segment(2) != 'logout') {
                 $this->session->set_flashdata('notif-error', 'Anda sudah login !');
-                redirect('user');
+                redirect('pegawai');
             }
         }
         $this->load->model('M_Login', 'login');
@@ -48,9 +48,9 @@ class Auth extends CI_Controller
             if ($cek == 'admin') {
                 $this->session->set_flashdata('toastr-success', 'Login berhasil');
                 redirect('admin');
-            } else if ($cek == 'user') {
+            } else if ($cek == 'pegawai') {
                 $this->session->set_flashdata('toastr-success', 'Login berhasil');
-                redirect('user');
+                redirect('pegawai');
             } else {
                 $this->session->set_flashdata('toastr-error', $cek);
                 redirect('auth');

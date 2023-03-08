@@ -21,12 +21,17 @@
 
     <!-- Custom Theme Style -->
     <link href="<?= base_url(); ?>assets/build/css/custom.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/vendors/toastr/toastr.min.css">
 </head>
 
 <body class="login">
     <div>
         <a class="hiddenanchor" id="signup"></a>
         <a class="hiddenanchor" id="signin"></a>
+
+        <div class="toastr-success" data-flashdata="<?= $this->session->flashdata('toastr-success'); ?>"></div>
+        <div class="toastr-error" data-flashdata="<?= $this->session->flashdata('toastr-error'); ?>"></div>
 
         <div class="login_wrapper">
             <div class="animate form login_form">
@@ -89,6 +94,12 @@
             </div>
         </div>
     </div>
+
+    <!-- jQuery -->
+    <script src="<?= base_url(); ?>assets/vendors/jquery/dist/jquery.min.js"></script>
+
+    <script src="<?= base_url(); ?>assets/vendors/toastr/toastr.min.js"></script>
+    <script src="<?= base_url(); ?>assets/vendors/toastr/customScript.js"></script>
 </body>
 
 </html>
