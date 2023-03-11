@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title><?= $title; ?></title>
 
     <!-- Bootstrap -->
     <link href="<?= base_url(); ?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +21,9 @@
 
     <!-- Custom Theme Style -->
     <link href="<?= base_url(); ?>assets/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- FancyBox -->
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/vendors/fancybox/jquery.fancybox.min.css" type="text/css" />
 
     <link rel="stylesheet" href="<?= base_url(); ?>assets/vendors/toastr/toastr.min.css">
 </head>
@@ -98,8 +101,12 @@
     <!-- jQuery -->
     <script src="<?= base_url(); ?>assets/vendors/jquery/dist/jquery.min.js"></script>
 
+    <!-- FancyBox -->
+    <script src="<?= base_url(); ?>assets/vendors/fancybox/jquery.fancybox.min.js"></script>
+
     <script src="<?= base_url(); ?>assets/vendors/toastr/toastr.min.js"></script>
     <script src="<?= base_url(); ?>assets/vendors/toastr/customScript.js"></script>
+
 </body>
 
 </html>

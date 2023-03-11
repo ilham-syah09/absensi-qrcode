@@ -2,7 +2,7 @@
 <div class="right_col" role="main">
 	<div class="row mb-3 text-right">
 		<div class="col-xl-12">
-			<a href="<?= base_url('admin/presensi/list/') . $presensi->tanggal; ?>" class="btn btn-primary">Kembali</a>
+			<a href="<?= base_url('pegawai/presensi/') . date('Y', strtotime($presensi->tanggal)) . '/' . date('m', strtotime($presensi->tanggal)); ?>" class="btn btn-primary">Kembali</a>
 		</div>
 	</div>
 	<div class="row">
@@ -108,7 +108,7 @@
 		<?php else : ?>
 			<div class="col-lg-6">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header bg-primary text-white">
 						<h4>Detail Izin</h4>
 					</div>
 					<div class="card-body">
@@ -147,10 +147,6 @@
 											</tr>
 										</thead>
 									</table>
-									<?php if ($presensi->statusIzin == 'Menunggu') : ?>
-										<a href="<?= base_url('admin/presensi/izin/Ditolak/') . $presensi->id; ?>" class="btn btn-danger">Tolak</a>
-										<a href="<?= base_url('admin/presensi/izin/Disetujui/') . $presensi->id; ?>" class="btn btn-success">Setujui</a>
-									<?php endif; ?>
 								</div>
 							</div>
 						</div>

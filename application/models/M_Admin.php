@@ -57,11 +57,6 @@ class M_Admin extends CI_Model
 		return $this->db->get('pegawai')->result();
 	}
 
-	public function getSetting()
-	{
-		return $this->db->get('setting')->row();
-	}
-
 	public function getTahunIni()
 	{
 		$this->db->select('YEAR(tanggal) as tahun');
