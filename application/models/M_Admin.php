@@ -33,10 +33,14 @@ class M_Admin extends CI_Model
 		return $this->db->get('shift')->result();
 	}
 
-	public function getJadwal()
+	public function getJadwal($where = null)
 	{
 		$this->db->select('jadwal.*, shift.nama');
 		$this->db->join('shift', 'shift.id = jadwal.idShift', 'inner');
+
+		if ($where) {
+			$this->db->where($where);
+		}
 
 		$this->db->order_by('jadwal.tanggalAwal, shift.jamPulang', 'desc');
 
