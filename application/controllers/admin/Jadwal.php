@@ -139,9 +139,9 @@ class Jadwal extends CI_Controller
 		$this->db->or_where('izin !=', null);
 		$this->db->group_end();
 
-		$cek = $this->db->get('presensi')->row();
+		$cekPresensi = $this->db->get('presensi')->row();
 
-		if (!$cek) {
+		if (!$cekPresensi) {
 			$this->db->where('id', $id);
 			$delete = $this->db->delete('jadwal');
 
@@ -229,9 +229,9 @@ class Jadwal extends CI_Controller
 		$this->db->or_where('izin !=', null);
 		$this->db->group_end();
 
-		$cek = $this->db->get('presensi')->row();
+		$cekPresensi = $this->db->get('presensi')->row();
 
-		if (!$cek) {
+		if (!$cekPresensi) {
 			$pegawai = $this->input->post('idPegawai');
 
 			$begin = new DateTime($this->input->post('tanggalAwal'));
@@ -277,10 +277,146 @@ class Jadwal extends CI_Controller
 				$this->session->set_flashdata('toastr-error', 'Pegawai tidak boleh kosong!');
 			}
 		} else {
-			$this->session->set_flashdata('toastr-error', 'Jadwal sudah digunakan, tidak bisa diedit!');
+			$this->session->set_flashdata('toastr-error', 'Jadwal sudah digunakan, tidak bisa tukar shift!');
 		}
 
 		redirect('admin/jadwal', 'refresh');
+	}
+
+	public function detail()
+	{
+		$idJadwal = $this->uri->segment(4);
+		$idPegawai = $this->uri->segment(5);
+
+		$pegawai = $this->admin->getPegawaiPresensi([
+			'presensi.idJadwal' => $idJadwal
+		]);
+
+		if (!$idPegawai) {
+			$idPegawai = $pegawai[0]->idPegawai;
+		}
+
+		$data = [
+			'title'   => 'Jadwal',
+			'page'    => 'admin/detailJadwal',
+			'sidebar' => 'admin/sidebar',
+			'navbar'  => 'admin/navbar',
+			'shift'   => $this->admin->getShift(),
+			'pegawai' => $pegawai,
+			'detailJadwal'  => $this->admin->getListPegawaiPresensi([
+				'presensi.idJadwal'  => $idJadwal,
+				'presensi.idPegawai' => $idPegawai
+			]),
+			'jadwal'  => $this->admin->getJadwal([
+				'jadwal.id' => $idJadwal
+			]),
+			'peg_ini' => $idPegawai
+		];
+
+		$this->load->view('index', $data);
+	}
+
+	public function tukarShift()
+	{
+		$id = $this->input->post('id');
+		$idPegawai = $this->input->post('idPegawai');
+		$shift = $this->input->post('shift');
+		$tanggal = $this->input->post('tanggal');
+
+		$this->db->where([
+			'id' => $id
+		]);
+
+		$this->db->group_start();
+		$this->db->where('presensiMasuk !=', null);
+		$this->db->or_where('presensiPulang !=', null);
+		$this->db->or_where('izin !=', null);
+		$this->db->group_end();
+
+		$cekPresensi = $this->db->get('presensi')->row();
+
+		if (!$cekPresensi) {
+			$this->db->where([
+				'id !='     => $id,
+				'idPegawai' => $idPegawai,
+				'tanggal'   => $tanggal
+			]);
+
+			$cekTanggal = $this->db->get('presensi')->row();
+
+			if (!$cekTanggal) {
+				$this->db->where('idShift', $shift);
+				$this->db->where('tanggalAwal <=', $tanggal);
+				$this->db->where('tanggalAkhir >=', $tanggal);
+
+				$jadwal = $this->db->get('jadwal')->row();
+
+				if ($jadwal) {
+					$dataPresensi = [
+						'idJadwal' => $jadwal->id,
+						'tanggal' => $tanggal
+					];
+				} else {
+					$dataJadwal = [
+						'idShift'      => $shift,
+						'tanggalAwal'  => $tanggal,
+						'tanggalAkhir' => $tanggal
+					];
+					$this->db->insert('jadwal', $dataJadwal);
+					$insert_id = $this->db->insert_id();
+
+					$dataPresensi = [
+						'idJadwal' => $$insert_id,
+						'tanggal'  => $tanggal
+					];
+				}
+
+				$this->db->where('id', $id);
+				$update = $this->db->update('presensi', $dataPresensi);
+
+				if ($update) {
+					$this->session->set_flashdata('toastr-success', 'Data berhasil disimpan');
+				} else {
+					$this->session->set_flashdata('toastr-error', 'Data gagal disimpan!!');
+				}
+			} else {
+				$this->session->set_flashdata('toastr-error', 'Tanggal ' . date('d M Y', strtotime($tanggal)) . ' sudah tersedia!');
+			}
+		} else {
+			$this->session->set_flashdata('toastr-error', 'Jadwal sudah digunakan, tidak bisa tukar shift!');
+		}
+
+		redirect($_SERVER['HTTP_REFERER'], 'refresh');
+	}
+
+	public function deleteJadwal($id)
+	{
+		$this->db->where([
+			'id' => $id
+		]);
+
+		$this->db->group_start();
+		$this->db->where('presensiMasuk !=', null);
+		$this->db->or_where('presensiPulang !=', null);
+		$this->db->or_where('izin !=', null);
+		$this->db->group_end();
+
+		$cekPresensi = $this->db->get('presensi')->row();
+
+		if (!$cekPresensi) {
+			$this->db->where('id', $id);
+			$delete = $this->db->delete('presensi');
+
+			if ($delete) {
+				$this->session->set_flashdata('toastr-success', 'Data berhasil dihapus');
+			} else {
+				$this->session->set_flashdata('toastr-error', 'Data gagal dihapus!!');
+			}
+		} else {
+			$this->session->set_flashdata('toastr-error', 'Jadwal sudah digunakan, tidak bisa dihapus!');
+		}
+
+		redirect($_SERVER['HTTP_REFERER'], 'refresh');
 	}
 }
 

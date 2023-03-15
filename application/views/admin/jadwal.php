@@ -28,6 +28,7 @@
 										<td><?= date('d M Y', strtotime($dt->tanggalAkhir)); ?></td>
 										<td>
 											<a href="#" class="badge badge-info list_btn" data-toggle="modal" data-target="#listPegawai" data-id="<?= $dt->id; ?>">List Pegawai</a>
+											<a href="<?= base_url('admin/jadwal/detail/' . $dt->id); ?>" class="badge badge-primary">Detail</a>
 											<a href="#" class="badge badge-warning edit_btn" data-toggle="modal" data-target="#editJadwal" data-id="<?= $dt->id; ?>" data-idshift="<?= $dt->idShift; ?>" data-tanggalawal="<?= $dt->tanggalAwal; ?>" data-tanggalakhir="<?= $dt->tanggalAkhir; ?>">Edit</a>
 											<a href="<?= base_url('admin/jadwal/delete/' . $dt->id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="badge badge-danger">Delete</a>
 										</td>

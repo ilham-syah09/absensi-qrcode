@@ -132,6 +132,30 @@ class M_Admin extends CI_Model
 
 		return $this->db->get('presensi')->row();
 	}
+
+	public function getPegawaiPresensi($where)
+	{
+		$this->db->select('presensi.idPegawai, pegawai.nama');
+		$this->db->join('pegawai', 'pegawai.id = presensi.idPegawai', 'inner');
+
+		$this->db->where($where);
+		$this->db->group_by('presensi.idPegawai');
+		$this->db->order_by('pegawai.nama', 'asc');
+
+		return $this->db->get('presensi')->result();
+	}
+
+	public function getListPegawaiPresensi($where)
+	{
+		$this->db->select('presensi.*, pegawai.nama, jadwal.idShift');
+		$this->db->join('pegawai', 'pegawai.id = presensi.idPegawai', 'inner');
+		$this->db->join('jadwal', 'jadwal.id = presensi.idJadwal', 'inner');
+
+		$this->db->where($where);
+		$this->db->order_by('pegawai.nama', 'asc');
+
+		return $this->db->get('presensi')->result();
+	}
 }
 
 /* End of file M_Admin.php */
