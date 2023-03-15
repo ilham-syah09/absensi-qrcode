@@ -14,6 +14,7 @@
 									<th>Presensi Masuk</th>
 									<th>Presensi Pulang</th>
 									<th>Izin</th>
+									<th>Keterangan</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -75,6 +76,7 @@
 												<span class="badge badge-info">Tidak Izin</span>
 											<?php endif; ?>
 										</td>
+										<td><?= $shift[$presensiHariIni[0]->idShift]->nama; ?></td>
 										<th>
 											<?php if ($presensiHariIni[0]->presensiMasuk == null && $presensiHariIni[0]->presensiPulang == null) : ?>
 												<?php if ($presensiHariIni[0]->izin == null) : ?>
@@ -141,6 +143,7 @@
 									<th>Presensi Masuk</th>
 									<th>Presensi Pulang</th>
 									<th>Izin</th>
+									<th>Keterangan</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -193,6 +196,7 @@
 												<?php endif; ?>
 											<?php endif; ?>
 										</td>
+										<td><?= $shift[$pres->idShift]->nama; ?></td>
 										<td>
 											<a href="<?= base_url('pegawai/presensi/detail/') . $pres->id; ?>" class="badge badge-warning" data-toggle="tooltip" data-title="Detail">Detail</a>
 										</td>

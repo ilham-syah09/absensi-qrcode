@@ -37,37 +37,39 @@
                         <h5>Jadwal Pekan Ini</h5>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="bg-info p-2 text-white mb-2 text-center">
-                                    <h6 class="mt-2"><?= $shift->nama; ?></h6>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="bg-primary p-2 text-white mb-2 float-left">
-                                    <span>Jam Masuk <?= $shift->jamMasuk; ?></span>
-                                </div>
-                                <div class="bg-primary p-2 text-white float-right">
-                                    <span>Jam Pulang <?= $shift->jamPulang; ?></span>
-                                </div>
-                            </div>
-                            <?php foreach ($allJadwal as $jadwal) : ?>
+                        <?php foreach ($groupJadwal as $gj) : ?>
+                            <div class="row">
                                 <div class="col-md-12">
-                                    <?php
-                                    if ($jadwal->presensiMasuk != null) {
-                                        $class = 'bg-success';
-                                    } else if ($jadwal->izin != null) {
-                                        $class = 'bg-info';
-                                    } else {
-                                        $class = 'bg-secondary';
-                                    }
-                                    ?>
-                                    <div class="<?= $class; ?> p-2 text-white mb-2 text-center">
-                                        <span class="mt-2"><?= hari(date('N', strtotime($jadwal->tanggal))) . ', ' . date('d M Y', strtotime($jadwal->tanggal)); ?></span>
+                                    <div class="bg-info p-2 text-white mb-2 text-center">
+                                        <h6 class="mt-2"><?= $shift[$gj->idJadwal]->nama; ?></h6>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
+                                <div class="col-sm-12">
+                                    <div class="bg-primary p-2 text-white mb-2 float-left">
+                                        <span>Jam Masuk <?= $shift[$gj->idJadwal]->jamMasuk; ?></span>
+                                    </div>
+                                    <div class="bg-primary p-2 text-white float-right">
+                                        <span>Jam Pulang <?= $shift[$gj->idJadwal]->jamPulang; ?></span>
+                                    </div>
+                                </div>
+                                <?php foreach ($allJadwal[$gj->idJadwal] as $jadwal) : ?>
+                                    <div class="col-md-12">
+                                        <?php
+                                        if ($jadwal->presensiMasuk != null) {
+                                            $class = 'bg-success';
+                                        } else if ($jadwal->izin != null) {
+                                            $class = 'bg-info';
+                                        } else {
+                                            $class = 'bg-secondary';
+                                        }
+                                        ?>
+                                        <div class="<?= $class; ?> p-2 text-white mb-2 text-center">
+                                            <span class="mt-2"><?= hari(date('N', strtotime($jadwal->tanggal))) . ', ' . date('d M Y', strtotime($jadwal->tanggal)); ?></span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -82,12 +84,12 @@
                         <?php if ($presensiHariIni) : ?>
                             <div class="col-md-12">
                                 <div class="bg-info p-2 text-white mb-2 text-center">
-                                    <h6 class="mt-2"><?= $shift->nama; ?></h6>
+                                    <h6 class="mt-2"><?= $shift[$presensiHariIni[0]->idJadwal]->nama; ?></h6>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="bg-primary p-2 text-white mb-2 float-left">
-                                    <span>Jam Masuk <?= $shift->jamMasuk; ?></span>
+                                    <span>Jam Masuk <?= $shift[$presensiHariIni[0]->idJadwal]->jamMasuk; ?></span>
                                 </div>
                                 <?php if ($presensiHariIni[0]->izin == null) : ?>
                                     <?php if ($presensiHariIni[0]->presensiMasuk != null) : ?>
@@ -107,7 +109,7 @@
                             </div>
                             <div class="col-sm-12">
                                 <div class="bg-primary p-2 text-white float-left">
-                                    <span>Jam Pulang <?= $shift->jamPulang; ?></span>
+                                    <span>Jam Pulang <?= $shift[$presensiHariIni[0]->idJadwal]->jamPulang; ?></span>
                                 </div>
                                 <?php if ($presensiHariIni[0]->izin == null) : ?>
                                     <?php if ($presensiHariIni[0]->presensiPulang != null) : ?>
