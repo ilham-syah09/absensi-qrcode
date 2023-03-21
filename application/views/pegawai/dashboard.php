@@ -1,7 +1,7 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
             <div class="card">
                 <div class="card-header justify-content-center">
                     <h5>Biodata</h5>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <?php if ($presensiHariIni) : ?>
-            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                 <div class="card">
                     <div class="card-header justify-content-center">
                         <h5>Jadwal Pekan Ini</h5>
@@ -44,12 +44,19 @@
                                         <h6 class="mt-2"><?= $shift[$gj->idJadwal]->nama; ?></h6>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="bg-primary p-2 text-white mb-2 float-left">
-                                        <span>Jam Masuk <?= $shift[$gj->idJadwal]->jamMasuk; ?></span>
-                                    </div>
-                                    <div class="bg-primary p-2 text-white float-right">
-                                        <span>Jam Pulang <?= $shift[$gj->idJadwal]->jamPulang; ?></span>
+                                <div class="col-md-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="bg-primary p-2 text-white">
+                                                <span>Jam Masuk <?= $shift[$gj->idJadwal]->jamMasuk; ?></span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="bg-primary p-2 text-white">
+                                                <span>Jam Pulang <?= $shift[$gj->idJadwal]->jamPulang; ?></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <?php foreach ($allJadwal[$gj->idJadwal] as $jadwal) : ?>
@@ -74,7 +81,25 @@
                 </div>
             </div>
         <?php endif; ?>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+            <div class="card">
+                <div class="card-header justify-content-center">
+                    <h5>Jadwal Hari Libur</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <?php foreach ($hariLibur as $day => $libur) : ?>
+                            <div class="col-md-12">
+                                <div class="bg-danger p-2 text-white mb-2 text-center">
+                                    <span class="mt-2"><?= hari($day) . ', ' . $libur ?></span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
             <div class="card">
                 <div class="card-header justify-content-center">
                     <h5>Presensi Hari Ini - <?= hari(date('N')) . ', ' . date('d M Y'); ?></h5>

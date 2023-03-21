@@ -40,6 +40,9 @@ class Home extends CI_Controller
             'presensi.tanggal'   => $tanggal,
         ]);
 
+        $hari = [1, 2, 3, 4, 5, 6, 7];
+        $hariLibur = [];
+
         if ($presensiHariIni) {
             $allJadwal = [];
             $shift = [];
@@ -48,6 +51,80 @@ class Home extends CI_Controller
                     'presensi.idPegawai' => $this->dt_user->id,
                     'presensi.idJadwal' => $jadwal->idJadwal
                 ]);
+
+                $cekHari = date('N', strtotime($allJadwal[$jadwal->idJadwal][0]->tanggal));
+
+                for ($h = 1; $h <= $cekHari; $h++) {
+                    $cekIndex = array_search($h, $hariLibur);
+
+                    if ($cekIndex !== true) {
+                        $hariLibur[$h] = date('d M Y', strtotime('-' . ($cekHari - $h) . ' day', strtotime($allJadwal[$jadwal->idJadwal][0]->tanggal)));
+                    }
+                }
+
+                if ($cekHari < 7) {
+                    for ($h = 7; $h >= $cekHari; $h--) {
+                        $cekIndex = array_search($h, $hariLibur);
+                        if ($cekIndex !== true) {
+                            $hariLibur[$h] = date('d M Y', strtotime('+' . ($h - $cekHari) . ' day', strtotime($allJadwal[$jadwal->idJadwal][0]->tanggal)));
+                        }
+                    }
+                }
+
+                // foreach ($allJadwal[$jadwal->idJadwal] as $key => $presensi) {
+                //     $cekHari = date('N', strtotime($presensi->tanggal));
+
+                //     if (($key + 1) < count($allJadwal[$jadwal->idJadwal])) {
+                //         if ($cekHari > 1) {
+                //             for ($h = 1; $h <= $cekHari; $h++) {
+                //                 $cekIndex = array_search($h, $hariLibur);
+
+                //                 if ($cekIndex !== true) {
+                //                     $hariLibur[$h] = date('d M Y', strtotime('-' . ($cekHari - $h) . ' day', strtotime($presensi->tanggal)));
+                //                 }
+                //             }
+                //         } else {
+                //             $cekIndex = array_search($cekHari, $hariLibur);
+
+                //             if ($cekIndex !== true) {
+                //                 $hariLibur[$cekHari] = date('d M Y', strtotime($presensi->tanggal));
+                //             }
+                //         }
+                //     } else {
+                //         for ($h = 1; $h <= $cekHari; $h++) {
+                //             $cekIndex = array_search($h, $hariLibur);
+
+                //             if ($cekIndex !== true) {
+                //                 $hariLibur[$h] = date('d M Y', strtotime('-' . ($cekHari - $h) . ' day', strtotime($presensi->tanggal)));
+                //             }
+                //         }
+
+                //         if ($cekHari < 7) {
+                //             for ($h = 7; $h >= $cekHari; $h--) {
+                //                 $cekIndex = array_search($h, $hariLibur);
+                //                 if ($cekIndex !== true) {
+                //                     $hariLibur[$h] = date('d M Y', strtotime('+' . ($h - $cekHari) . ' day', strtotime($presensi->tanggal)));
+                //                 }
+                //             }
+                //         } else {
+                //             $cekIndex = array_search($cekHari, $hariLibur);
+
+                //             if ($cekIndex !== true) {
+                //                 $hariLibur[$cekHari] = date('d M Y', strtotime($presensi->tanggal));
+                //             }
+                //         }
+                //     }
+                // }
+
+                foreach ($allJadwal[$jadwal->idJadwal] as $key => $presensi) {
+                    $cekH = date('N', strtotime($presensi->tanggal));
+
+                    $index = array_search($cekH, $hari);
+
+                    if ($index !== false) {
+                        unset($hariLibur[$cekH]);
+                    }
+                }
 
                 $shift[$jadwal->idJadwal] = $this->pegawai->getShiftJoin([
                     'jadwal.id' => $jadwal->idJadwal
@@ -59,14 +136,15 @@ class Home extends CI_Controller
         }
 
         $data = [
-            'title'   => 'Dashboard Pegawai',
-            'sidebar' => 'pegawai/sidebar',
-            'page'    => 'pegawai/dashboard',
-            'navbar'  => 'pegawai/navbar',
+            'title'           => 'Dashboard Pegawai',
+            'sidebar'         => 'pegawai/sidebar',
+            'page'            => 'pegawai/dashboard',
+            'navbar'          => 'pegawai/navbar',
             'presensiHariIni' => $presensiHariIni,
-            'groupJadwal' => $groupJadwal,
-            'allJadwal' => $allJadwal,
-            'shift' => $shift
+            'groupJadwal'     => $groupJadwal,
+            'allJadwal'       => $allJadwal,
+            'shift'           => $shift,
+            'hariLibur'       => $hariLibur
         ];
 
         $this->load->view('index', $data);
