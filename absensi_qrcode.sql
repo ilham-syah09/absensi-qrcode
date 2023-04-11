@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2023 at 08:25 AM
+-- Generation Time: Apr 11, 2023 at 06:12 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -106,7 +106,8 @@ INSERT INTO `jadwal` (`id`, `idShift`, `tanggalAwal`, `tanggalAkhir`, `createdAt
 (2, 1, '2023-03-06', '2023-03-10', '2023-03-08 09:31:22', NULL),
 (3, 2, '2023-03-08', '2023-03-12', '2023-03-08 09:51:35', NULL),
 (7, 1, '2023-03-13', '2023-03-17', '2023-03-14 07:16:54', NULL),
-(8, 2, '2023-03-13', '2023-03-17', '2023-03-14 07:17:28', '2023-03-15 03:30:07');
+(8, 2, '2023-03-13', '2023-03-17', '2023-03-14 07:17:28', '2023-03-15 03:30:07'),
+(9, 1, '2023-03-21', '2023-03-25', '2023-03-21 02:32:31', '2023-03-21 03:07:50');
 
 -- --------------------------------------------------------
 
@@ -124,6 +125,7 @@ CREATE TABLE `pegawai` (
   `jk` int(1) NOT NULL,
   `status` int(1) NOT NULL,
   `image` text NOT NULL DEFAULT 'default.png',
+  `user_agent` text DEFAULT NULL,
   `createAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updateAt` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -132,11 +134,11 @@ CREATE TABLE `pegawai` (
 -- Dumping data for table `pegawai`
 --
 
-INSERT INTO `pegawai` (`id`, `email`, `password`, `nama`, `nip`, `idJabatan`, `jk`, `status`, `image`, `createAt`, `updateAt`) VALUES
-(1, 'pegawai.1@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Pegawai 1', '199912030001', 3, 2, 1, 'default.png', '2023-02-20 02:17:29', '2023-03-11 03:43:08'),
-(5, 'ilham@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Ilham', '129091209', 1, 1, 1, 'default.png', '2023-02-20 04:15:23', '2023-02-22 02:36:24'),
-(8, 'pegawai.3@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Pegawai 3', '199912030001', 3, 2, 1, 'default.png', '2023-02-20 02:17:29', '2023-03-11 03:43:10'),
-(9, 'pegawai.4@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Pegawai 4', '129091209', 1, 1, 1, 'default.png', '2023-02-20 04:15:23', '2023-02-22 02:36:24');
+INSERT INTO `pegawai` (`id`, `email`, `password`, `nama`, `nip`, `idJabatan`, `jk`, `status`, `image`, `user_agent`, `createAt`, `updateAt`) VALUES
+(1, 'pegawai.1@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Pegawai 1', '199912030001', 3, 2, 1, 'default.png', NULL, '2023-02-20 02:17:29', '2023-03-11 03:43:08'),
+(5, 'ilham@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Ilham', '129091209', 1, 1, 1, 'default.png', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '2023-02-20 04:15:23', '2023-04-11 04:11:02'),
+(8, 'pegawai.3@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Pegawai 3', '199912030001', 3, 2, 1, 'default.png', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0', '2023-02-20 02:17:29', '2023-04-11 04:11:58'),
+(9, 'pegawai.4@gmail.com', '$2y$10$RCnEISXcGP68RQIyYtcot.5itQA.MDUpFCRhZXBJUHAAYp.oiH3wi', 'Pegawai 4', '129091209', 1, 1, 1, 'default.png', NULL, '2023-02-20 04:15:23', '2023-02-22 02:36:24');
 
 -- --------------------------------------------------------
 
@@ -199,7 +201,12 @@ INSERT INTO `presensi` (`id`, `idJadwal`, `idPegawai`, `tanggal`, `presensiMasuk
 (82, 8, 5, '2023-03-14', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-15 03:30:07', NULL),
 (83, 7, 5, '2023-03-15', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-15 03:30:07', '2023-03-15 04:05:36'),
 (84, 8, 5, '2023-03-16', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-15 03:30:07', NULL),
-(85, 8, 5, '2023-03-17', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-15 03:30:07', '2023-03-15 04:05:04');
+(85, 8, 5, '2023-03-17', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-15 03:30:07', '2023-03-15 04:05:04'),
+(86, 9, 5, '2023-03-25', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-21 02:32:31', '2023-03-21 07:22:46'),
+(87, 9, 5, '2023-03-21', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-21 02:32:31', NULL),
+(88, 9, 5, '2023-03-22', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-21 02:32:31', '2023-03-21 07:10:46'),
+(89, 9, 5, '2023-03-23', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-21 02:32:31', '2023-03-21 07:22:32'),
+(90, 9, 5, '2023-03-24', NULL, NULL, NULL, NULL, NULL, NULL, 0, '2023-03-21 02:32:31', '2023-03-21 07:22:23');
 
 -- --------------------------------------------------------
 
@@ -297,7 +304,7 @@ ALTER TABLE `jabatan`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -309,7 +316,7 @@ ALTER TABLE `pegawai`
 -- AUTO_INCREMENT for table `presensi`
 --
 ALTER TABLE `presensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `shift`

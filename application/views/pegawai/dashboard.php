@@ -81,24 +81,26 @@
                 </div>
             </div>
         <?php endif; ?>
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-            <div class="card">
-                <div class="card-header justify-content-center">
-                    <h5>Jadwal Hari Libur</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <?php foreach ($hariLibur as $day => $libur) : ?>
-                            <div class="col-md-12">
-                                <div class="bg-danger p-2 text-white mb-2 text-center">
-                                    <span class="mt-2"><?= hari($day) . ', ' . $libur ?></span>
+        <?php if ($hariLibur) : ?>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+                <div class="card">
+                    <div class="card-header justify-content-center">
+                        <h5>Jadwal Hari Libur</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <?php foreach ($hariLibur as $day => $libur) : ?>
+                                <div class="col-md-12">
+                                    <div class="bg-danger p-2 text-white mb-2 text-center">
+                                        <span class="mt-2"><?= hari($day) . ', ' . $libur ?></span>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
             <div class="card">
                 <div class="card-header justify-content-center">
