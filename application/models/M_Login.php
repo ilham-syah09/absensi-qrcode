@@ -33,16 +33,60 @@ class M_Login extends CI_Model
 
             if ($data) {
                 if (password_verify($password, $data->password)) {
-                    $login        =    array(
-                        'is_logged_in'    => true,
-                        'username'        => $username,
-                        'id'              => $data->id,
-                        'role'            => 'pegawai'
-                    );
-                    if ($login) {
-                        $this->session->set_userdata('log_pegawai', $login);
-                        $this->session->set_userdata($login);
-                        return 'pegawai';
+                    $user_agent = $this->input->user_agent();
+
+                    $this->db->where('user_agent', $user_agent);
+                    $userAgentReady = $this->db->get('pegawai')->row();
+
+                    if ($userAgentReady) {
+                        if ($userAgentReady->id == $data->id) {
+                            $login        =    array(
+                                'is_logged_in'    => true,
+                                'username'        => $username,
+                                'id'              => $data->id,
+                                'role'            => 'pegawai'
+                            );
+                            if ($login) {
+                                $this->session->set_userdata('log_pegawai', $login);
+                                $this->session->set_userdata($login);
+                                return 'pegawai';
+                            }
+                        } else {
+                            return 'Access denied!!';
+                        }
+                    } else {
+                        if ($data->user_agent == NULL) {
+                            $this->db->where('id', $data->id);
+                            $this->db->update('pegawai', ['user_agent' => $user_agent]);
+
+                            $login        =    array(
+                                'is_logged_in'    => true,
+                                'username'        => $username,
+                                'id'              => $data->id,
+                                'role'            => 'pegawai'
+                            );
+                            if ($login) {
+                                $this->session->set_userdata('log_pegawai', $login);
+                                $this->session->set_userdata($login);
+                                return 'pegawai';
+                            }
+                        } else {
+                            if ($user_agent == $data->user_agent) {
+                                $login        =    array(
+                                    'is_logged_in'    => true,
+                                    'username'        => $username,
+                                    'id'              => $data->id,
+                                    'role'            => 'pegawai'
+                                );
+                                if ($login) {
+                                    $this->session->set_userdata('log_pegawai', $login);
+                                    $this->session->set_userdata($login);
+                                    return 'pegawai';
+                                }
+                            } else {
+                                return 'Access denied!!';
+                            }
+                        }
                     }
                 } else {
                     return 'Username atau Password Salah!!';
