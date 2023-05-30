@@ -34,10 +34,20 @@ class Scan extends CI_Controller
 					$data = [
 						'presensiMasuk' => date('H:i:s')
 					];
+
+					$this->db->insert('queue', [
+						'idPresensi' => $cekPresensi[0]->id,
+						'act' => 'imageMasuk'
+					]);
 				} else {
 					$data = [
 						'presensiPulang' => date('H:i:s')
 					];
+
+					$this->db->insert('queue', [
+						'idPresensi' => $cekPresensi[0]->id,
+						'act'        => 'imagePulang'
+					]);
 				}
 
 				$this->db->where('id', $cekPresensi[0]->id);

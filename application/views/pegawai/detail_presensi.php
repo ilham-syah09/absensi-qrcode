@@ -15,6 +15,9 @@
 					<div class="card-body">
 						<div class="row">
 							<?php if ($presensi->presensiMasuk != null) : ?>
+								<div class="col-md-12 text-center mb-2">
+									<img src="<?= base_url('upload/presensi/') . $presensi->imageMasuk; ?>" alt="Picture Presensi Masuk" class="img-thumbnail" width="400">
+								</div>
 								<div class="col-md-12">
 									<div class="table-responsive">
 										<table class="table table-bordered" width="100%" cellspacing="0">
@@ -64,6 +67,9 @@
 					<div class="card-body">
 						<div class="row">
 							<?php if ($presensi->presensiPulang != null) : ?>
+								<div class="col-md-12 text-center mb-2">
+									<img src="<?= base_url('upload/presensi/') . $presensi->imagePulang; ?>" alt="Picture Presensi Masuk" class="img-thumbnail" width="400">
+								</div>
 								<div class="col-md-12">
 									<div class="table-responsive">
 										<table class="table table-bordered" width="100%" cellspacing="0">
