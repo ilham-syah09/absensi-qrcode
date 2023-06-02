@@ -7,6 +7,8 @@
         <nav class="nav navbar-nav">
             <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
+                    <a href="<?= base_url('scan'); ?>" class="badge badge-info" target="_blank">SCAN
+                    </a>
                     <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                         <img src="<?= base_url('upload/profile/' . $this->dt_user->image); ?>" alt=""><?= $this->dt_user->nama; ?>
                     </a>

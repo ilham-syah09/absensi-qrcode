@@ -69,7 +69,7 @@
 
 			setInterval(function() {
 				QRCodeKehadiran();
-			}, 120000);
+			}, 30000);
 		});
 
 		function QRCodeKehadiran() {
