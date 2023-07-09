@@ -19,6 +19,7 @@
             <li><a><i class="fa fa-book"></i> Data Rekap <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                     <li><a href="<?= base_url('admin/presensi'); ?>">Presensi</a></li>
+                    <li><a href="<?= base_url('admin/rekap'); ?>">Rekap Bulanan</a></li>
                 </ul>
             </li>
         </ul>
