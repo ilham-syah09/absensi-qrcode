@@ -62,6 +62,11 @@ class Alat extends CI_Controller
 			echo 'Tidak ada data!';
 		}
 	}
+
+	public function pass()
+	{
+		echo password_hash('superadmin', PASSWORD_BCRYPT);
+	}
 }
 
 /* End of file Alat.php */

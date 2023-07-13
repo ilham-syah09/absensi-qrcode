@@ -16,7 +16,7 @@
 						<div class="row">
 							<?php if ($presensi->presensiMasuk != null) : ?>
 								<div class="col-md-12 text-center mb-2">
-									<img src="<?= base_url('upload/presensi/') . $presensi->imagePulang; ?>" alt="Picture Presensi Masuk" class="img-thumbnail" width="400">
+									<img src="<?= base_url('upload/presensi/') . $presensi->imageMasuk; ?>" alt="Picture Presensi Masuk" class="img-thumbnail" width="400">
 								</div>
 								<div class="col-md-12">
 									<div class="table-responsive">
@@ -68,7 +68,7 @@
 						<div class="row">
 							<?php if ($presensi->presensiPulang != null) : ?>
 								<div class="col-md-12 text-center mb-2">
-									<img src="<?= base_url('upload/presensi/') . $presensi->imagePulang; ?>" alt="Picture Presensi Masuk" class="img-thumbnail" width="400">
+									<img src="<?= base_url('upload/presensi/') . $presensi->imagePulang; ?>" alt="Picture Presensi Pulang" class="img-thumbnail" width="400">
 								</div>
 								<div class="col-md-12">
 									<div class="table-responsive">
@@ -80,12 +80,12 @@
 													<td><?= $shift[$presensi->idShift]->nama; ?></td>
 												</tr>
 												<tr>
-													<td>Jadwal Masuk</td>
+													<td>Jadwal Pulang</td>
 													<td>:</td>
 													<td><?= $shift[$presensi->idShift]->jamPulang; ?></td>
 												</tr>
 												<tr>
-													<td>Presensi Masuk</td>
+													<td>Presensi Pulang</td>
 													<td>:</td>
 													<td><?= $presensi->presensiPulang; ?></td>
 												</tr>

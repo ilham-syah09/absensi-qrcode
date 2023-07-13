@@ -24,11 +24,11 @@
 const char* ssid = "hp murah";
 const char* password = "12345678";
 
-String serverName = "192.168.132.7";   // REPLACE WITH YOUR LOCAL IP ADDRESS
-//String serverName = "codesolution.my.id";   // OR REPLACE WITH YOUR DOMAIN NAME
+//String serverName = "192.168.132.7";   // REPLACE WITH YOUR LOCAL IP ADDRESS
+String serverName = "presensi-sinarjaya.my.id";   // OR REPLACE WITH YOUR DOMAIN NAME
 
-String serverPath = "/absensi-qrcode/alat/kirimGambar";     // The default serverPath should be upload.php
-String urlGetQueue = "http://192.168.132.7/absensi-qrcode/alat/getQueue";
+String serverPath = "/alat/kirimGambar";     // The default serverPath should be upload.php
+String urlGetQueue = "http://presensi-sinarjaya.my.id/alat/getQueue";
 
 String responQueue;
 
